@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://cv1cmeoaxqqd4"]
+
+[ext_resource type="Script" uid="uid://bxmdhcnc35c6d" path="res://Scripts/player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://bsa13rjtmn7dp" path="res://assets/sprites/tilemap-characters_packed.png" id="2_g2els"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
+radius = 9.0
+
+[node name="Player" type="CharacterBody2D" unique_id=392553530]
+script = ExtResource("1_4flbx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362469545]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_dqkch")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=400604275]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_qlg0r")
