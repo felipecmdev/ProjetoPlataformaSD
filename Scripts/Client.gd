@@ -8,3 +8,4 @@ func _init():
 	
 	print ("Saindo...")
 	self.quit()
+#teste para commit
