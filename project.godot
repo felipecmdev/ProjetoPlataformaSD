@@ -10,8 +10,13 @@ config_version=5
 
 [application]
 
-config/name="aprendendoParaGriefingGrid"
+config/name="GriefingGrid"
+run/main_scene="uid://bn10hph8wme4l"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[autoload]
+
+NetworkManager="*res://Scripts/network_manager.gd"
 
 [dotnet]
 

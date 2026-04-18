@@ -19,7 +19,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
-radius = 9.0
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D" unique_id=392553530]
 script = ExtResource("1_4flbx")
