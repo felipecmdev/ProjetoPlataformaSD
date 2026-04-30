@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckfnfljga713x"]
 
-[ext_resource type="Script" uid="uid://doyimtfkh8c3g" path="res://scenes/menu.gd" id="1_xdvgc"]
+[ext_resource type="Script" uid="uid://doyimtfkh8c3g" path="res://Scripts/menu.gd" id="1_xdvgc"]
 
 [node name="MenuPrincipal" type="Control" unique_id=1722216031]
 layout_mode = 3
@@ -30,9 +30,15 @@ custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "Host"
 
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=1427580936]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Digite o IP aqui..."
+
 [node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=3045721]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "Join"
 
 [connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
