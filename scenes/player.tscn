@@ -21,6 +21,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
 radius = 8.0
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_g2els"]
+a = Vector2(1, 0)
+b = Vector2(14, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=392553530]
 script = ExtResource("1_4flbx")
 
@@ -32,3 +36,7 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=400604275]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_qlg0r")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1090425065]
+position = Vector2(-7, -15)
+shape = SubResource("SegmentShape2D_g2els")
