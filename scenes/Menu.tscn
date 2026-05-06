@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://ckfnfljga713x"]
 
+[ext_resource type="FontFile" uid="uid://dp8bynbbuskwl" path="res://assets/fonts/PressStart2P-Regular.ttf" id="1_upctu"]
 [ext_resource type="Script" uid="uid://doyimtfkh8c3g" path="res://Scripts/menu.gd" id="1_xdvgc"]
+
+[sub_resource type="Theme" id="Theme_11y2r"]
+default_font = ExtResource("1_upctu")
+default_font_size = 8
 
 [node name="MenuPrincipal" type="Control" unique_id=1722216031]
 layout_mode = 3
@@ -9,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_11y2r")
 script = ExtResource("1_xdvgc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1080629657]
@@ -28,17 +34,29 @@ grow_vertical = 2
 [node name="HostButton" type="Button" parent="VBoxContainer" unique_id=1335208684]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "Host"
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer" unique_id=1427580936]
+[node name="IpTexto" type="LineEdit" parent="VBoxContainer" unique_id=1427580936]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Digite o IP aqui..."
 
+[node name="NomeText" type="LineEdit" parent="VBoxContainer" unique_id=161595272]
+layout_mode = 2
+placeholder_text = "Digite seu nome aqui..."
+
 [node name="JoinButton" type="Button" parent="VBoxContainer" unique_id=3045721]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "Join"
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer" unique_id=49220518]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+autowrap_mode = 2
 
 [connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

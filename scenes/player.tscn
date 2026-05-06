@@ -2,41 +2,136 @@
 
 [ext_resource type="Script" uid="uid://bxmdhcnc35c6d" path="res://Scripts/player.gd" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://bsa13rjtmn7dp" path="res://assets/sprites/tilemap-characters_packed.png" id="2_g2els"]
+[ext_resource type="FontFile" uid="uid://dp8bynbbuskwl" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_qhqgy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhqgy"]
+bg_color = Color(0, 0, 0, 0.4509804)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qhqgy"]
+font_size = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("2_g2els")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("2_g2els")
+region = Rect2(168, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("2_g2els")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("2_g2els")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("2_g2els")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("2_g2els")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("2_g2els")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
-region = Rect2(0, 0, 24, 24)
+region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}],
+"loop": true,
+"name": &"Amarelo",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}],
+"loop": true,
+"name": &"Azul",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}],
+"loop": true,
+"name": &"Laranja",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}],
+"loop": true,
+"name": &"Rosa",
+"speed": 3.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2els")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qhqgy")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 5.0
+"name": &"Verde",
+"speed": 3.5
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
 radius = 8.0
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_g2els"]
-a = Vector2(1, 0)
-b = Vector2(14, 0)
-
 [node name="Player" type="CharacterBody2D" unique_id=392553530]
 script = ExtResource("1_4flbx")
+
+[node name="NameLabel" type="Label" parent="." unique_id=533971204]
+offset_left = -19.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -26.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_qhqgy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qhqgy")
+text = "nome"
+label_settings = SubResource("LabelSettings_qhqgy")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362469545]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_dqkch")
-animation = &"idle"
+animation = &"Laranja"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=400604275]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_qlg0r")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1090425065]
-position = Vector2(-7, -15)
-shape = SubResource("SegmentShape2D_g2els")
