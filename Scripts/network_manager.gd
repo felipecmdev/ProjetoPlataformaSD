@@ -30,11 +30,25 @@ var connected_clients: Dictionary = {}
 var my_player_id: int = -1
 
 var my_player_name: String = "Visitante"
+var my_skin_name: String = "Azul"
 
 signal lobby_players_updated
 var players_data: Dictionary = {}
 
 var players_ready: Dictionary = {}
+var players_skin: Dictionary = {}
+
+var last_disconnect_reason: String = ""
+
+func _reset_session_state() -> void:
+	connected_clients.clear()
+	players_nodes.clear()
+	players_data.clear()
+	players_ready.clear()
+	players_skin.clear()
+	current_state = GameState.LOBBY
+	my_player_id = -1
+	role = Role.NONE
 
 func _ready() -> void:
 	get_tree().physics_frame.connect(_on_physics_frame_end)
@@ -52,6 +66,7 @@ func setup_connection() -> void:
 		my_player_id = 0 # O Host é o ID 0
 		
 		players_data[my_player_id] = my_player_name
+		players_skin[my_player_id] = my_skin_name
 		lobby_players_updated.emit()
 		
 	elif role == Role.CLIENT:
@@ -137,6 +152,24 @@ func poll_receive_host() -> void:
 					for key in connected_clients.keys():
 						udp.set_dest_address(connected_clients[key]["ip"], connected_clients[key]["port"])
 						udp.put_packet(buffer)
+			
+			elif mensagem_texto.begins_with("SKN|"):
+				var partes = mensagem_texto.split("|")
+				if partes.size() >= 3:
+					var skn_id = int(partes[1])
+					var skin = partes[2]
+					players_skin[skn_id] = skin
+					lobby_players_updated.emit()
+					
+					if players_nodes.has(skn_id):
+						var boneco_skn = players_nodes[skn_id]
+						if is_instance_valid(boneco_skn) and boneco_skn.has_method("set_skin"):
+							boneco_skn.set_skin(skin)
+					
+					var buffer = mensagem_texto.to_utf8_buffer()
+					for key in connected_clients.keys():
+						udp.set_dest_address(connected_clients[key]["ip"], connected_clients[key]["port"])
+						udp.put_packet(buffer)
 			# Quit
 			elif mensagem_texto.begins_with("Q|"):
 				if client_id != -1:
@@ -184,6 +217,9 @@ func poll_receive_host() -> void:
 					udp.set_dest_address(ip_cliente, porta_cliente)
 					udp.put_packet(msg_host.to_utf8_buffer())
 					
+					var msg_host_skin = "SKN|%d|%s" % [my_player_id, my_skin_name]
+					udp.put_packet(msg_host_skin.to_utf8_buffer())
+					
 					for key in connected_clients.keys():
 						var dados_antigos = connected_clients[key]
 						
@@ -196,9 +232,18 @@ func poll_receive_host() -> void:
 							var msg_antiga_rdy = "RDY|%d|%s" % [dados_antigos["id"], antigo_ta_pronto]
 							udp.put_packet(msg_antiga_rdy.to_utf8_buffer())
 							
+							var skin_antigo = str(players_skin.get(dados_antigos["id"], "Azul"))
+							var msg_antiga_skin = "SKN|%d|%s" % [dados_antigos["id"], skin_antigo]
+							udp.put_packet(msg_antiga_skin.to_utf8_buffer())
+							
 							var msg_nova = "N|%d|%s" % [client_id, nome_recebido]
 							udp.set_dest_address(dados_antigos["ip"], dados_antigos["port"])
 							udp.put_packet(msg_nova.to_utf8_buffer())
+							
+							var msg_nova_skin = "SKN|%d|%s" % [client_id, "Azul"]
+							udp.put_packet(msg_nova_skin.to_utf8_buffer())
+					
+					players_skin[client_id] = "Azul"
 							
 				# Servidor cheio
 				else:
@@ -240,6 +285,16 @@ func poll_receive_client() -> void:
 			if partes.size() >= 2:
 				var id_desconectado = int(partes[1])
 				
+				# Se o host caiu/fechou, derruba a sessão inteira do cliente.
+				if id_desconectado == 0:
+					print("[NET] Host desconectou. Voltando ao menu.")
+					last_disconnect_reason = "Host desconectou."
+					udp.close()
+					_reset_session_state()
+					lobby_players_updated.emit()
+					get_tree().change_scene_to_file("res://scenes/Menu.tscn")
+					return
+				
 				if players_nodes.has(id_desconectado):
 					var boneco = players_nodes[id_desconectado]
 					if is_instance_valid(boneco):
@@ -273,6 +328,20 @@ func poll_receive_client() -> void:
 					var boneco = players_nodes[id_alvo]
 					if is_instance_valid(boneco) and boneco.has_method("set_player_name"):
 						boneco.set_player_name(nome_alvo)
+		
+		elif mensagem_recebida.begins_with("SKN|"):
+			var partes = mensagem_recebida.split("|")
+			if partes.size() >= 3:
+				var id_alvo = int(partes[1])
+				var skin_alvo = partes[2]
+				
+				players_skin[id_alvo] = skin_alvo
+				lobby_players_updated.emit()
+				
+				if players_nodes.has(id_alvo):
+					var boneco = players_nodes[id_alvo]
+					if is_instance_valid(boneco) and boneco.has_method("set_skin"):
+						boneco.set_skin(skin_alvo)
 		
 		elif mensagem_recebida.begins_with("RDY|"):
 			var partes = mensagem_recebida.split("|")
@@ -403,7 +472,16 @@ func _process_knockback(msg: String) -> void:
 #Funções pra excluir o jogador quando desconectar
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if role == Role.CLIENT and my_player_id != -1:
+		if role == Role.HOST:
+			# Avisa todos os clientes que o host encerrou.
+			var msg_quit := "Q|0"
+			var buffer_quit := msg_quit.to_utf8_buffer()
+			for key in connected_clients.keys():
+				var dados = connected_clients[key]
+				udp.set_dest_address(dados["ip"], dados["port"])
+				udp.put_packet(buffer_quit)
+		
+		elif role == Role.CLIENT and my_player_id != -1:
 			udp.set_dest_address(join_address, port)
 			udp.put_packet("Q|".to_utf8_buffer())
 		
@@ -439,6 +517,7 @@ func _desconectar_jogador(id_desconectado: int):
 	
 	players_ready.erase(id_desconectado)
 	players_data.erase(id_desconectado)
+	players_skin.erase(id_desconectado)
 	lobby_players_updated.emit()
 
 func _get_free_player_id() -> int:
@@ -458,6 +537,29 @@ func send_ready_state(is_ready: bool) -> void:
 	if role == Role.CLIENT:
 		var msg = "RDY|%d|%s" % [my_player_id, "true" if is_ready else "false"]
 		udp.set_dest_address(join_address, port)
+		udp.put_packet(msg.to_utf8_buffer())
+
+func send_skin_state(skin: String) -> void:
+	my_skin_name = skin
+	players_skin[my_player_id] = skin
+	lobby_players_updated.emit()
+	
+	if role == Role.HOST:
+		if players_nodes.has(my_player_id):
+			var boneco = players_nodes[my_player_id]
+			if is_instance_valid(boneco) and boneco.has_method("set_skin"):
+				boneco.set_skin(skin)
+		
+		var msg = "SKN|%d|%s" % [my_player_id, skin]
+		var buffer = msg.to_utf8_buffer()
+		for key in connected_clients.keys():
+			var dados = connected_clients[key]
+			udp.set_dest_address(dados["ip"], dados["port"])
+			udp.put_packet(buffer)
+		
+	elif role == Role.CLIENT and my_player_id != -1:
+		udp.set_dest_address(join_address, port)
+		var msg = "SKN|%d|%s" % [my_player_id, skin]
 		udp.put_packet(msg.to_utf8_buffer())
 
 func start_game_host() -> void:

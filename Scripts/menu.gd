@@ -6,6 +6,10 @@ const MAX_CARACTERES_NOME := 20
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	NetworkManager.connection_approved.connect(_on_connection_approved)
+	if NetworkManager.last_disconnect_reason != "":
+		error_label.text = NetworkManager.last_disconnect_reason
+		error_label.show()
+		NetworkManager.last_disconnect_reason = ""
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -20,8 +24,7 @@ func validar_nome() -> bool:
 	var nome_digitado = nome_label.text.strip_edges().replace("|", "")
 	
 	if nome_digitado == "":
-		error_label.text = "Digite um nome\n
-							antes de entrar!"
+		error_label.text = "Digite um nome\nantes de entrar!"
 
 		error_label.show()
 		return false

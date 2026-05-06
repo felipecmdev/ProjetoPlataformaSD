@@ -28,11 +28,11 @@ region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("2_g2els")
-region = Rect2(0, 24, 24, 24)
+region = Rect2(0, 25, 24, 23)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
 atlas = ExtResource("2_g2els")
-region = Rect2(24, 24, 24, 24)
+region = Rect2(24, 25, 24, 23)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
 atlas = ExtResource("2_g2els")
@@ -122,7 +122,7 @@ offset_bottom = -26.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_qhqgy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_qhqgy")
-text = "nome"
+text = ""
 label_settings = SubResource("LabelSettings_qhqgy")
 horizontal_alignment = 1
 vertical_alignment = 1

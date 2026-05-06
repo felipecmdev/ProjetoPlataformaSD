@@ -32,6 +32,11 @@ func set_player_name(nome: String) -> void:
 	if player_id == NetworkManager.my_player_id:
 		$NameLabel.hide()
 
+func set_skin(nome_skin: String) -> void:
+	skin_name = nome_skin
+	if $AnimatedSprite2D.sprite_frames != null and $AnimatedSprite2D.sprite_frames.has_animation(skin_name):
+		$AnimatedSprite2D.play(skin_name)
+
 func _physics_process(delta: float) -> void:
 	if not NetworkManager.is_online():
 		return

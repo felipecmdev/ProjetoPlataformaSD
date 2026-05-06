@@ -30,6 +30,19 @@ func _spawn_player(id: int, pos: Vector2) -> void:
 	novo_jogador.global_position = pos
 	novo_jogador.player_id = id
 	
+	# Aplica nome conhecido no momento do spawn (evita ficar "nome" até chegar pacote N|...).
+	# O próprio jogador local já se esconde no `set_player_name`.
+	if novo_jogador.has_method("set_player_name"):
+		var nome: String = str(NetworkManager.players_data.get(id, ""))
+		if nome != "":
+			novo_jogador.set_player_name(nome)
+	
+	# Aplica skin conhecida no momento do spawn.
+	if novo_jogador.has_method("set_skin"):
+		var skin: String = str(NetworkManager.players_skin.get(id, "Azul"))
+		if skin != "":
+			novo_jogador.set_skin(skin)
+	
 	add_child(novo_jogador)
 	NetworkManager.register_player_node(id, novo_jogador)
 	
