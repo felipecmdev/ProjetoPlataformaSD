@@ -13,7 +13,7 @@ var knockback_recovery: float = 0.0
 # CARACTERISTICAS GERAIS
 var facing_direction: float = 1.0
 var player_name: String = ""
-var skin_name: String = "Azul"
+var skin_name: String = "Verde"
 var player_id: int = -1
 
 func _ready() -> void:

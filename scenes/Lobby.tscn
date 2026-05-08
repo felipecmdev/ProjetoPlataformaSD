@@ -9,6 +9,26 @@
 [sub_resource type="Theme" id="Theme_ras1x"]
 default_font = ExtResource("1_6jt0u")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_skin_verde"]
+atlas = ExtResource("2_ras1x")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skin_amarelo"]
+atlas = ExtResource("2_ras1x")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skin_rosa"]
+atlas = ExtResource("2_ras1x")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skin_azul"]
+atlas = ExtResource("2_ras1x")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skin_laranja"]
+atlas = ExtResource("2_ras1x")
+region = Rect2(0, 24, 24, 24)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdhm0"]
 content_margin_left = 6.0
 content_margin_top = 6.0
@@ -36,26 +56,6 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbi84"]
 atlas = ExtResource("2_ras1x")
 region = Rect2(2, 1, 20, 19)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_skin_verde"]
-atlas = ExtResource("2_ras1x")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_skin_azul"]
-atlas = ExtResource("2_ras1x")
-region = Rect2(48, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_skin_rosa"]
-atlas = ExtResource("2_ras1x")
-region = Rect2(96, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_skin_amarelo"]
-atlas = ExtResource("2_ras1x")
-region = Rect2(144, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_skin_laranja"]
-atlas = ExtResource("2_ras1x")
-region = Rect2(0, 24, 24, 24)
 
 [node name="Lobby" type="Control" unique_id=2005991373]
 layout_mode = 3
@@ -92,35 +92,40 @@ layout_mode = 2
 
 [node name="Skins" type="HBoxContainer" parent="MarginContainer/SplitVertical" unique_id=2133589635]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
-theme_override_constants/separation = 12
 
-[node name="SkinVerde" type="TextureButton" parent="MarginContainer/SplitVertical/Skins"]
-custom_minimum_size = Vector2(54, 54)
+[node name="SkinVerde" type="TextureButton" parent="MarginContainer/SplitVertical/Skins" unique_id=1583156173]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 texture_normal = SubResource("AtlasTexture_skin_verde")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SkinAmarelo" type="TextureButton" parent="MarginContainer/SplitVertical/Skins"]
-custom_minimum_size = Vector2(54, 54)
+[node name="SkinAmarelo" type="TextureButton" parent="MarginContainer/SplitVertical/Skins" unique_id=1959878346]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 texture_normal = SubResource("AtlasTexture_skin_amarelo")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SkinRosa" type="TextureButton" parent="MarginContainer/SplitVertical/Skins"]
-custom_minimum_size = Vector2(54, 54)
+[node name="SkinRosa" type="TextureButton" parent="MarginContainer/SplitVertical/Skins" unique_id=1637957396]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 texture_normal = SubResource("AtlasTexture_skin_rosa")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SkinAzul" type="TextureButton" parent="MarginContainer/SplitVertical/Skins"]
-custom_minimum_size = Vector2(54, 54)
+[node name="SkinAzul" type="TextureButton" parent="MarginContainer/SplitVertical/Skins" unique_id=1203470434]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 texture_normal = SubResource("AtlasTexture_skin_azul")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SkinLaranja" type="TextureButton" parent="MarginContainer/SplitVertical/Skins"]
-custom_minimum_size = Vector2(54, 54)
+[node name="SkinLaranja" type="TextureButton" parent="MarginContainer/SplitVertical/Skins" unique_id=404832152]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
 texture_normal = SubResource("AtlasTexture_skin_laranja")
 ignore_texture_size = true
 stretch_mode = 5
