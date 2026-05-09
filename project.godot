@@ -22,6 +22,10 @@ NetworkManager="*res://Scripts/network_manager.gd"
 
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom="res://themes/project_theme.tres"
+
 [dotnet]
 
 project/assembly_name="aprendendoParaGriefingGrid"

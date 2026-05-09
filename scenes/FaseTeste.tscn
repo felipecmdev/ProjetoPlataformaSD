@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bn10hph8wme4l"]
 
-[ext_resource type="PackedScene" uid="uid://cv1cmeoaxqqd4" path="res://scenes/Player.tscn" id="1_phf4n"]
+[ext_resource type="PackedScene" uid="uid://cv1cmeoaxqqd4" path="res://scenes/player.tscn" id="1_phf4n"]
 [ext_resource type="Texture2D" uid="uid://bfs85r6imnxbj" path="res://assets/sprites/tilemap-backgrounds_packed.png" id="2_1rll7"]
 [ext_resource type="Texture2D" uid="uid://caqp4cnqauv36" path="res://assets/sprites/tilemap_packed.png" id="2_4bdmv"]
 [ext_resource type="Script" uid="uid://bftytso2x86t7" path="res://Scripts/fase_teste.gd" id="3_lm4nf"]
@@ -149,6 +149,7 @@ texture_region_size = Vector2i(18, 18)
 7:3/0 = 0
 7:4/0 = 0
 7:5/0 = 0
+7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -0.98605347, 9, -1.0068645, 9, 9, -9, 9)
 7:6/0 = 0
 7:7/0 = 0
 7:8/0 = 0
@@ -160,6 +161,7 @@ texture_region_size = Vector2i(18, 18)
 8:3/0 = 0
 8:4/0 = 0
 8:5/0 = 0
+8:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -4.9285336, 9, -4.9285326, 9, 9, -9, 9)
 8:6/0 = 0
 8:7/0 = 0
 8:8/0 = 0

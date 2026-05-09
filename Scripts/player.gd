@@ -40,6 +40,10 @@ func set_skin(nome_skin: String) -> void:
 func _physics_process(delta: float) -> void:
 	if not NetworkManager.is_online():
 		return
+	
+	if NetworkManager.current_state != NetworkManager.GameState.PLAYING:
+		velocity = Vector2.ZERO
+		return
 
 	if not is_on_floor():
 		velocity.y += gravity * delta

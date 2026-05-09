@@ -1,13 +1,10 @@
 [gd_scene format=3 uid="uid://bb7ujw5cmh5gq"]
 
-[ext_resource type="FontFile" uid="uid://dp8bynbbuskwl" path="res://assets/fonts/PressStart2P-Regular.ttf" id="1_6jt0u"]
 [ext_resource type="Script" uid="uid://da2yvfdddh223" path="res://Scripts/lobby.gd" id="2_cdhm0"]
 [ext_resource type="Texture2D" uid="uid://bsa13rjtmn7dp" path="res://assets/sprites/tilemap-characters_packed.png" id="2_ras1x"]
 [ext_resource type="Texture2D" uid="uid://x13j0q4wv2gw" path="res://assets/sprites/checkbox_marcado.png" id="4_oeg6l"]
 [ext_resource type="Texture2D" uid="uid://bdbis7qt10vy" path="res://assets/sprites/checkbox_vazio.png" id="5_1yh37"]
-
-[sub_resource type="Theme" id="Theme_ras1x"]
-default_font = ExtResource("1_6jt0u")
+[ext_resource type="Theme" uid="uid://bqj8u0themeproj" path="res://themes/project_theme.tres" id="6_theme"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skin_verde"]
 atlas = ExtResource("2_ras1x")
@@ -64,7 +61,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_ras1x")
+theme = ExtResource("6_theme")
 script = ExtResource("2_cdhm0")
 
 [node name="Background" type="TextureRect" parent="." unique_id=825604286]
