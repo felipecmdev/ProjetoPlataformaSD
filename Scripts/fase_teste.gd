@@ -315,6 +315,15 @@ func _spawn_build_item(item_type: String, pos: Vector2) -> void:
 	root.add_child(sprite)
 	
 	match item_type:
+		_BuildItems.ITEM_SPRING:
+			var spring_area := Area2D.new()
+			var col_sp := CollisionShape2D.new()
+			var shape_sp := RectangleShape2D.new()
+			shape_sp.size = region.size
+			col_sp.shape = shape_sp
+			spring_area.add_child(col_sp)
+			spring_area.body_entered.connect(_on_spring_body_entered)
+			root.add_child(spring_area)
 		_BuildItems.ITEM_LADDER:
 			# Escada: só Area2D por agora (não bloqueia passagem; lógica de escalar depois).
 			var area := Area2D.new()
@@ -365,6 +374,10 @@ func _item_atlas_texture(item_id: String) -> AtlasTexture:
 	tex.atlas = load(_BuildItems.ATLAS_PATH) as Texture2D
 	tex.region = region
 	return tex
+	
+func _on_spring_body_entered(body):
+	if body is CharacterBody2D:
+		body.velocity.y = -400
 
 func _create_build_sprite(item_id: String) -> Sprite2D:
 	var s := Sprite2D.new()
